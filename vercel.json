@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/ai-influencer-ebook-landing/index.html"
+    }
+  ]
+}
