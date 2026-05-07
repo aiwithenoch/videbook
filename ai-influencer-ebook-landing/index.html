@@ -138,14 +138,45 @@
         gap: 12px;
       }
 
-      .price strong {
+      .sale-price {
         font-size: 3.4rem;
+        font-weight: 900;
         line-height: 1;
       }
 
-      .price span {
+      .old-price {
+        color: #8c8172;
+        font-size: 1.4rem;
+        font-weight: 900;
+        text-decoration: line-through;
+        text-decoration-thickness: 2px;
+      }
+
+      .price-note {
         color: #6d665b;
         font-weight: 800;
+      }
+
+      .countdown {
+        width: min(360px, 100%);
+        display: grid;
+        gap: 7px;
+        padding: 12px 14px;
+        border: 1px solid #e0c9a0;
+        border-radius: 8px;
+        background: rgba(255, 250, 240, 0.72);
+      }
+
+      .countdown span {
+        color: #6d665b;
+        font-size: 0.82rem;
+        font-weight: 800;
+      }
+
+      .countdown strong {
+        color: #9b3a24;
+        font-size: 1rem;
+        line-height: 1.2;
       }
 
       .buy {
@@ -225,7 +256,7 @@
           padding: 11px 12px;
         }
 
-        .price strong {
+        .sale-price {
           font-size: 3rem;
         }
       }
@@ -259,13 +290,43 @@
           </ul>
 
           <div class="price">
-            <strong>$7</strong>
-            <span>Instant ebook access</span>
+            <span class="old-price">$40</span>
+            <strong class="sale-price">$7</strong>
+            <span class="price-note">Instant ebook access</span>
+          </div>
+
+          <div class="countdown" aria-live="polite">
+            <span>Launch discount resets in</span>
+            <strong id="countdown">9 days</strong>
           </div>
 
           <a class="buy" href="https://checkout.dodopayments.com/buy/pdt_0NeL3ORM65BRYicGU0em4?quantity=1">Buy Now for $7</a>
         </div>
       </section>
     </main>
+    <script>
+      const countdown = document.getElementById("countdown");
+      const cycleMs = 9 * 24 * 60 * 60 * 1000;
+      const startAt = Date.UTC(2026, 0, 1);
+
+      function pad(value) {
+        return String(value).padStart(2, "0");
+      }
+
+      function updateCountdown() {
+        const now = Date.now();
+        const elapsed = (now - startAt) % cycleMs;
+        const remaining = cycleMs - elapsed;
+        const days = Math.floor(remaining / (24 * 60 * 60 * 1000));
+        const hours = Math.floor((remaining / (60 * 60 * 1000)) % 24);
+        const minutes = Math.floor((remaining / (60 * 1000)) % 60);
+        const seconds = Math.floor((remaining / 1000) % 60);
+
+        countdown.textContent = `${days}d ${pad(hours)}h ${pad(minutes)}m ${pad(seconds)}s`;
+      }
+
+      updateCountdown();
+      window.setInterval(updateCountdown, 1000);
+    </script>
   </body>
 </html>
